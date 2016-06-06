@@ -9,7 +9,8 @@ let app = express();
 let port = 8000;
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  // res.sendFile(path.join(__dirname, 'index.html'));
+  res.redirect('/wedding');
 });
 
 app.use('/wedding', wedding);
