@@ -3,6 +3,7 @@
 let fs = require('fs');
 let path = require('path');
 let express = require('express');
+let http = require('http');
 let https = require('https');
 let privateKey = fs.readFileSync('/etc/letsencrypt/live/2h2o.us/privkey.pem', 'utf8');
 let certificate = fs.readFileSync('/etc/letsencrypt/live/2h2o.us/cert.pem', 'utf8');
@@ -41,3 +42,12 @@ httpsServer.listen(port, '0.0.0.0', (error) => {
   console.log('Server\'s UID is now ' + process.getuid());
   console.log(`Example app listening on port ${port}!`);
 });
+
+let http = require('http');
+http.createServer((req, res) => {
+    res.writeHead(301, {
+      "Location": "https://" + req.headers['host'] + req.url
+    });
+    res.end();
+  })
+  .listen(80);
