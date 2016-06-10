@@ -43,7 +43,6 @@ httpsServer.listen(port, '0.0.0.0', (error) => {
   console.log(`Example app listening on port ${port}!`);
 });
 
-let http = require('http');
 http.createServer((req, res) => {
     res.writeHead(301, {
       "Location": "https://" + req.headers['host'] + req.url
