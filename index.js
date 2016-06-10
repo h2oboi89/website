@@ -25,6 +25,19 @@ app.use('/wedding', wedding);
 
 let httpsServer = https.createServer(credentials, app);
 
-httpsServer.listen(port, '0.0.0.0', () => {
+httpsServer.listen(port, '0.0.0.0', (error) => {
+  if(error) {
+    console.log(error);
+    return;
+  }
+
+  // Find out which user used sudo through the environment variable
+  let uid = parseInt(process.env.SUDO_UID);
+
+  // Set our server's uid to that user
+  if(uid) {
+    process.setuid(uid);
+  }
+  console.log('Server\'s UID is now ' + process.getuid());
   console.log(`Example app listening on port ${port}!`);
 });
