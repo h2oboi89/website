@@ -15,7 +15,8 @@ let credentials = {
   cert: certificate
 };
 let app = express();
-let port = 443;
+let httpPort = 8000;
+let httpsPort = 443;
 
 app.get('/', (req, res) => {
   // res.sendFile(path.join(__dirname, 'index.html'));
@@ -26,21 +27,23 @@ app.use('/wedding', wedding);
 
 let httpsServer = https.createServer(credentials, app);
 
-httpsServer.listen(port, '0.0.0.0', (error) => {
+httpsServer.listen(httpsPort, '0.0.0.0', (error) => {
   if(error) {
     console.log(error);
-    return;
+    process.exit(1);
   }
 
-  // Find out which user used sudo through the environment variable
-  let uid = parseInt(process.env.SUDO_UID);
-
-  // Set our server's uid to that user
-  if(uid) {
-    process.setuid(uid);
+  try {
+    console.log('Old User ID: ' + process.getuid() + ', Old Group ID: ' + process.getgid());
+    process.setgid('users');
+    process.setuid('waters');
+    console.log('New User ID: ' + process.getuid() + ', New Group ID: ' + process.getgid());
   }
-  console.log('Server\'s UID is now ' + process.getuid());
-  console.log(`Example app listening on port ${port}!`);
+  catch(err) {
+    console.log('Cowardly refusing to keep the process alive as root.');
+    process.exit(1);
+  }
+  console.log(`HTTPS Server listening on port ${httpsPort}!`);
 });
 
 http.createServer((req, res) => {
@@ -49,4 +52,6 @@ http.createServer((req, res) => {
     });
     res.end();
   })
-  .listen(8000);
+  .listen(httpPort, () => {
+    console.log(`HTTP Server listening on port ${httpPort}!`);
+  });
