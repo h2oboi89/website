@@ -6,7 +6,7 @@ let express = require('express');
 let http = require('http');
 let https = require('https');
 let privateKey = fs.readFileSync('/etc/letsencrypt/live/2h2o.us/privkey.pem', 'utf8');
-let certificate = fs.readFileSync('/etc/letsencrypt/live/2h2o.us/cert.pem', 'utf8');
+let certificate = fs.readFileSync('/etc/letsencrypt/live/2h2o.us/fullchain.pem', 'utf8');
 
 let wedding = require('./wedding/index.js');
 
@@ -28,7 +28,7 @@ app.use('/wedding', wedding);
 let httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(httpsPort, '0.0.0.0', (error) => {
-  if(error) {
+  if (error) {
     console.log(error);
     process.exit(1);
   }
@@ -38,8 +38,7 @@ httpsServer.listen(httpsPort, '0.0.0.0', (error) => {
     process.setgid('users');
     process.setuid('waters');
     console.log('New User ID: ' + process.getuid() + ', New Group ID: ' + process.getgid());
-  }
-  catch(err) {
+  } catch (err) {
     console.log('Cowardly refusing to keep the process alive as root.');
     process.exit(1);
   }
