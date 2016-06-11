@@ -15,7 +15,7 @@ let credentials = {
   cert: certificate
 };
 let app = express();
-let port = 8443;
+let port = 443;
 
 app.get('/', (req, res) => {
   // res.sendFile(path.join(__dirname, 'index.html'));
