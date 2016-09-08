@@ -52,7 +52,7 @@ httpsServer.listen(httpsPort, '0.0.0.0', (error) => {
 
 http.createServer((req, res) => {
     res.writeHead(301, {
-      "Location": "https://" + req.headers['host'] + req.url
+      "Location": `https://${req.headers['host']}${req.url}`
     });
     res.end();
   })
