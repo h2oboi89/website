@@ -21,7 +21,7 @@ const app = express();
 const httpPort = 8000;
 const httpsPort = 443;
 
-app.use(favicon(path.join(__dirname + 'wave_icon.ico')));
+app.use(favicon(path.join(__dirname, 'wave_icon.ico')));
 
 app.get('/', (req, res) => {
   res.redirect('/wedding');
