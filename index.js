@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 
 app.use('/wedding', wedding);
 
-let httpsServer = https.createServer(credentials, app);
+const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(httpsPort, '0.0.0.0', (error) => {
   if(error) {
