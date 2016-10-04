@@ -2,7 +2,7 @@
   "name": "website",
   "version": "1.0.0",
   "description": "website",
-  "main": "index.js",
+  "main": "website.js",
   "scripts": {
     "gulp": "gulp",
     "lint": "gulp lint",
