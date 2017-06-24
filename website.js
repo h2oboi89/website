@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/becca', (req, res) => {
-  res.redirect('www.beccawaters.myitworks.com');
+  res.redirect('http://www.beccawaters.myitworks.com');
 });
 
 app.use('/wedding', wedding);
