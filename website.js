@@ -27,6 +27,10 @@ app.get('/', (req, res) => {
   res.redirect('/wedding');
 });
 
+app.get('/becca', (req, res) => {
+  res.redirect('www.beccawaters.myitworks.com');
+});
+
 app.use('/wedding', wedding);
 
 const httpsServer = https.createServer(credentials, app);
